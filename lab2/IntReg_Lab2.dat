@@ -1,0 +1,32 @@
+@1
+FFFF_FFFF
+5A5A_5A5A   //@2  alternating 1's and 0's
+A5A5_A5A5
+CCCC_CCCC   //@4  alternating 11's and 00's  (pattern 1)
+3333_3333
+C3C3_C3C3   //@6  alternating 11's and 00's  (pattern 2)
+3C3C_3C3C
+0000_0001   //@8  start "shifting" in 1's to the left
+0000_0003
+0000_0007
+0000_000F
+0000_001F
+0000_003F
+0000_007F
+0000_00FF
+0000_01FF
+0000_03FF
+0000_07FF
+0000_0FFF
+1000_0001   //@14 start "shifting" in 1 to the right
+3000_0003
+7000_0007
+F000_000F
+F800_001F
+FC00_003F
+FE00_007F
+FF00_00FF
+FF80_01FF
+FFC0_03FF
+F0F0_F0F0   //@1E alternating 1111's and 0000's
+0F0F_0F0F
