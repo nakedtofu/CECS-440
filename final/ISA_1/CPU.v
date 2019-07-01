@@ -1,0 +1,112 @@
+`timescale 1ns / 1ps
+/****************************** C E C S  4 4 0 ******************************
+ * 
+ * File Name:  CPU.v
+ * Project:    CECS 440 Senior Project - Enhanced MIPS Processor
+ * Designer:   Benjamin Santos and Naoaki Takatsu
+ * Email:      benjaminsantos@gmx.com
+ *             naoaki.takatsu@student.csulb.edu
+ * Rev. No.:   Version 1.0
+ * Rev. Date:  11/8/2018
+ *
+ * Purpose:    The Central Processing Unit(CPU) module has the Control 
+ *             Unit, Instruction Unit and the Datpath modules. 
+ *
+ * Notes:      The CPU can be connected to the DataMemory module and the
+ *             InputOutput module that can be written to and read from
+ *             according to the Instruction from the Instruction Memory
+ *             The Instruction Memory is instantiated using $readmemh on the 
+ *             testbench module (CPU_test1.v)
+ * 
+ ****************************************************************************/
+module CPU(clk, reset,            //Clock and Reset
+           intr,  int_ack,        //Interrupt Flags
+           D_MemToInt,            //Data Into IDP
+           Addr,  D_IntToMem,     //Data going to Memory
+           dm_cs, dm_rd, dm_wr    //Data Memory Flags
+           );
+   input         clk, reset, intr;
+   input  [31:0] D_MemToInt;
+   output        int_ack;
+   output [31:0] Addr, D_IntToMem;
+   output        dm_cs, dm_rd, dm_wr;
+   
+   //Wires
+	wire        N, Z, C, V;
+   wire [31:0] IR_out;
+   wire [31:0] PC_IUtoID, SE_16;
+   
+   //MCU control words(control words of state machine)
+   wire [4:0] FS;                //5-bit control word
+   wire [2:0] Y_Sel;             //3-bit control word
+   wire [1:0] pc_sel, DA_sel;    //2-bit control words
+   wire pc_ld, pc_inc, ir_ld, im_cs, im_rd, im_wr, 
+        D_En, T_sel, HILO_LD;
+   
+	/****************************************************************
+    *  Instantiate Control Unit, Instruction Unit and Datapath
+    ***************************************************************/
+    
+   //Control Unit
+   MCU      mips_ctrl(
+                      .sys_clk(clk), .reset(reset),//Clock and Reset
+                      .intr(intr),                 //Interrupt Request
+                      .c(C), .n(N), .z(Z), .v(V),  //ALU status Flags
+                      .IR(IR_out),                 //Instruction Register input
+                      .int_ack(int_ack),           //output to I/O subsystem
+                      .FS(FS),                     //Function Select
+                      .ir_ld(ir_ld),               //IR Laod Enable
+                      .pc_sel(pc_sel),             //  \
+                      .pc_ld(pc_ld),               // --> PC Flags
+                      .pc_inc(pc_inc),             //  /
+                      .im_cs(im_cs),               //  \
+                      .im_rd(im_rd),               // --> Instruction Memory Flags
+                      .im_wr(im_wr),               //  /
+                      .D_En(D_En),                 //  \
+                      .DA_sel(DA_sel),             //   \
+                      .T_sel(T_Sel),               // ---> Datapath Flags
+                      .HILO_ld(HILO_LD),           //   /
+                      .Y_sel(Y_Sel),               //  /
+                      .dm_cs(dm_cs),               //  \
+                      .dm_rd(dm_rd),               // --> Data Memory Flags
+                      .dm_wr(dm_wr)                //  /
+                     );
+
+   //Instruction Unit
+   Instruction_Unit IU(
+                      .clk(clk),  .reset(reset),   //Clock and Reset
+                      .PC_in(Addr),                //Value to change PC
+                      .ir_ld(ir_ld),               //IR Load Enable
+                      .pc_sel(pc_sel),             //  \
+                      .pc_ld(pc_ld),               // --> PC Flags
+                      .pc_inc(pc_inc),             //  /
+                      .im_cs(im_cs),               //  \
+                      .im_rd(im_rd),               // --> Instruction Memory Flags
+                      .im_wr(),                    //  /
+                      .PC_out(PC_IUtoID),          //Current PC sending to Datapath
+                      .IR_out(IR_out),             //Current IR sending to Datapath
+                      .SE_16(SE_16)                //Sign-Extended IR[15:0]
+                     );
+   
+   //Datapath
+   Integer_Datapath
+                 IDP (
+                      .clk(clk),    .reset(reset), //Clock and Reset
+                      .D_En(D_En),                 //Write Enable
+                      .D_Addr(IR_out[15:11]),      //D - Address
+                      .S_Addr(IR_out[25:21]),      //S - Address
+                      .T_Addr(IR_out[20:16]),      //T - Address
+                      .DT(SE_16),                  //Sign Extended IR[15:0]
+                      .DA_sel(DA_sel),             //Register File Write Selector
+                      .T_Sel(T_Sel),               //RT value Selector
+                      .FS(FS),                     //Function Select
+                      .N(N), .Z(Z), .C(C), .V(V),  //ALU Status Flags
+                      .HILO_LD(HILO_LD),           //Enable for HI and LO
+                      .DY(D_MemToInt),             //Value of Memory to D_in register
+                      .PC_in(PC_IUtoID),           //PC value into the Datapath
+                      .Y_Sel(Y_Sel),               //ALU_Out Selector
+                      .ALU_OUT(Addr),              //Data Address output of CPU
+                      .D_OUT(D_IntToMem)           //Data Value output of CPU
+                     );
+
+endmodule

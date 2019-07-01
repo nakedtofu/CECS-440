@@ -1,0 +1,62 @@
+ISim log file
+Running: D:\zzzzFROM OLD\SCHOOL\3 - FALL2018\CECS440\PROJECTS\ISA_1\ISA_1\TopLevel_ISA1_tb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb D:/zzzzFROM OLD/SCHOOL/3 - FALL2018/CECS440/PROJECTS/ISA_1/ISA_1/TopLevel_ISA1_tb_isim_beh.wdb 
+ISim P.20131013 (signature 0x7708f090)
+WARNING: A WEBPACK license was found.
+WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
+WARNING: ISim will run in Lite mode. Please refer to the ISim documentation for more information on the differences between the Lite and the Full version.
+This is a Lite version of ISim.
+Time resolution is 1 ps
+# onerror resume
+# wave add /
+# run 1000 ns
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+ 
+ 
+******************************************************************
+           CECS 440 - MIPS ISA Control Unit (2nd Test)            
+******************************************************************
+ 
+# run 1.00us
+# run 1.00us
+# run 1.00us
+BREAK INSTRUCTION FETCHED 3650.0 ps
+ R E G I S T E R ' S   A F T E R   B R E A K
+ 
+t=3660.0 ps, $r0 = 0x00000000  ||   $r16 = 0xxxxxxxxx
+t=3670.0 ps, $r1 = 0x0000ffff  ||   $r17 = 0xxxxxxxxx
+t=3680.0 ps, $r2 = 0x00000000  ||   $r18 = 0xxxxxxxxx
+t=3690.0 ps, $r3 = 0xxxxxxxxx  ||   $r19 = 0xxxxxxxxx
+t=3700.0 ps, $r4 = 0xxxxxxxxx  ||   $r20 = 0xxxxxxxxx
+t=3710.0 ps, $r5 = 0xxxxxxxxx  ||   $r21 = 0xxxxxxxxx
+t=3720.0 ps, $r6 = 0xxxxxxxxx  ||   $r22 = 0xxxxxxxxx
+t=3730.0 ps, $r7 = 0xxxxxxxxx  ||   $r23 = 0xxxxxxxxx
+t=3740.0 ps, $r8 = 0xxxxxxxxx  ||   $r24 = 0xxxxxxxxx
+t=3750.0 ps, $r9 = 0xxxxxxxxx  ||   $r25 = 0xxxxxxxxx
+t=3760.0 ps, $r10 = 0xxxxxxxxx  ||   $r26 = 0xxxxxxxxx
+t=3770.0 ps, $r11 = 0xxxxxxxxx  ||   $r27 = 0xxxxxxxxx
+t=3780.0 ps, $r12 = 0xxxxxxxxx  ||   $r28 = 0xxxxxxxxx
+t=3790.0 ps, $r13 = 0xxxxxxxxx  ||   $r29 = 0x000003fc
+t=3800.0 ps, $r14 = 0x5a5a3c3c  ||   $r30 = 0xxxxxxxxx
+t=3810.0 ps, $r15 = 0x10010100  ||   $r31 = 0x00000000
+ 
+Memory Locations 0xC0 to 0xFF
+t=3820.0 ps, M[000000c0] = 0x7fffffff
+t=3830.0 ps, M[000000c4] = 0x3fffffff
+t=3840.0 ps, M[000000c8] = 0x1fffffff
+t=3850.0 ps, M[000000cc] = 0x0fffffff
+t=3860.0 ps, M[000000d0] = 0x07ffffff
+t=3870.0 ps, M[000000d4] = 0x03ffffff
+t=3880.0 ps, M[000000d8] = 0x01ffffff
+t=3890.0 ps, M[000000dc] = 0x00ffffff
+t=3900.0 ps, M[000000e0] = 0x007fffff
+t=3910.0 ps, M[000000e4] = 0x003fffff
+t=3920.0 ps, M[000000e8] = 0x001fffff
+t=3930.0 ps, M[000000ec] = 0x000fffff
+t=3940.0 ps, M[000000f0] = 0x0007ffff
+t=3950.0 ps, M[000000f4] = 0x0003ffff
+t=3960.0 ps, M[000000f8] = 0x0001ffff
+t=3970.0 ps, M[000000fc] = 0x0000ffff
+t=3980.0 ps, PC = 0x0040003c,   IR = 0x0000000d
+ 
+Stopped at time : 3980 ns : File "D:/zzzzFROM OLD/SCHOOL/3 - FALL2018/CECS440/PROJECTS/ISA_1/ISA_1/MCU.v" Line 288
